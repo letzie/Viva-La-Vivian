@@ -1,0 +1,82 @@
+---
+title: "EDA"
+author: "Sara Tyo"
+date: "2022-11-21"
+output: pdf_document
+---
+
+```{r Set Up, include=F, echo=F}
+library(tidyverse)
+library(ggplot2)
+library(mice)
+library(VIM)
+```
+
+```{r Reading in Datasets, echo=F}
+indeed <- read_csv(here::here("Data/datafest2018-Updated-April12.csv"))
+```
+
+```{r Making random sample}
+set.seed(120)
+sub.indeed <- indeed[sample(size=100000, 1:dim(indeed)[1], replace=FALSE),]
+```
+
+```{r Looking at Unknowns that aren't NA for this sample}
+sub.indeed %>%                                           # Amount of data with unknown state 
+  select(country, stateProvince)%>% 
+  filter(country == "UNKNOWN" | is.na(country)) %>% 
+  dim()
+
+sub.indeed %>%                                           # Amount of data with unknown state
+  select(country, stateProvince)%>% 
+  filter(stateProvince =="UNKNOWN") %>% 
+  dim()
+
+sub.indeed %>%                                           # Amount of data with unknown salary
+  filter(estimatedSalary == 0) %>% 
+  dim()
+```
+
+```{r Isolating just Los Angeles, CA}
+sub.indeed.los <- indeed %>% 
+  filter(city =="Los Angeles") %>%
+  mutate('estimatedSalary' = replace(estimatedSalary,estimatedSalary == 0, NA))
+```
+
+
+```{r Analyzing NA values for Los Angeles}
+mis.los <- aggr(sub.indeed.los, col=c("lightblue", "red"), 
+                    numbers=TRUE, sortVars=TRUE, 
+                    lables=colnames(missing), cex.axis=0.7, gap=4,
+                    ylab=c("Hist of Missing Data", "Pattern of Missing Data"),
+     prop=TRUE, only.miss=TRUE)
+```
+ Main variables and their proportions:
+ 
+industry	0.8940412363			      (9)
+salaryCurrency	0.8009441772			(16)
+numReviews	0.5786288733			    (8)
+experienceRequired	0.4863005598   (14)
+
+```{r}
+#sub.indeed.los <- sub.indeed.los[,-c(4,5,6,8,9,14,16)]
+nona.sub.indeed.los <- na.omit(sub.indeed.los[,-c(4,5,6,8,9,14,16)])
+
+dim(sub.indeed.los) - dim(nona.sub.indeed.los) # lost rows
+dim(nona.sub.indeed.los) # remaining data
+```
+
+```{r}
+data.clean <- nona.sub.indeed.los
+data.clean[,c(5,6,10,13)] <- lapply(data.clean[,c(5,6,10,13)], factor)
+```
+
+```{r}
+write.csv(data.clean, file = "indeed_cleaned.csv")
+```
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+---
+title: ""
+author: "Sara Tyo, Letzi Esparza, Ryan Wallace, Cory Hiner, and Crystal Zhu"
+date: "`r format(Sys.Date(), '%D')`"
+header-includes:
+   - \usepackage{caption}
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+---
+
+```{r child = 'introduction-and-problem-statement.Rmd'}
+```
+
+```{r child = 'background-and-related-work.Rmd'}
+```
+
+```{r child = 'dataset-exploration-and-analysis.Rmd'}
+```
+
+```{r child = 'methods.Rmd'}
+```
+
+```{r child = 'results.Rmd'}
+```
+
+```{r child = 'discussion-and-conclusion.Rmd'}
+```
+
+```{r child = 'references.Rmd'}
+```
+
+ 
