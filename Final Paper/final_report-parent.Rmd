@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "Add Title that we agree on :)"
 author: "Sara Tyo, Letzi Esparza, Ryan Wallace, Cory Hiner, and Crystal Zhu"
 date: "`r format(Sys.Date(), '%D')`"
 header-includes:
