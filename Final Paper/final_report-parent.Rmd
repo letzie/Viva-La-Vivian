@@ -16,7 +16,7 @@ output:
 ```{r child = 'background-and-related-work.Rmd'}
 ```
 
-```{r child = 'dataset-exploration-and-analysis.Rmd'}
+```{r child = 'data-and-exploratory-data-analysis.Rmd'}
 ```
 
 ```{r child = 'methods.Rmd'}
